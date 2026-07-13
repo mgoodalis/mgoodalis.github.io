@@ -19,6 +19,9 @@
 
 .hero {
   position: relative;
+  width: 100%;
+  display: flex;
+  justify-content: center;
 
   .base,
   .framework,
@@ -27,10 +30,12 @@
     margin: 0 auto;
   }
 
-  .base {
-    width: 170px;
-    position: relative;
-    z-index: 0;
+  .hero-image {
+    width: min(95vw, 1000px);
+    height: auto;
+    display: block;
+    border-radius: 16px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
   }
 
   .framework,
