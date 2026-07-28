@@ -1,35 +1,35 @@
 import React from 'react';
 import { Navbar, Nav, Container } from 'react-bootstrap';
-import { LinkContainer } from 'react-router-bootstrap';
+import { Link } from 'react-router-dom';
 
 function NavBar() {
   return (
     <Navbar bg="dark" variant="dark" expand="lg" fixed="top">
       <Container>
-        <LinkContainer to="/">
-          <Navbar.Brand>My Portfolio</Navbar.Brand>
-        </LinkContainer>
+        <Navbar.Brand as={Link} to="/">
+          My Portfolio
+        </Navbar.Brand>
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav">
           <Nav className="me-auto">
-            <LinkContainer to="/">
-              <Nav.Link>Home</Nav.Link>
-            </LinkContainer>
-            <LinkContainer to="/about">
-              <Nav.Link>About Me</Nav.Link>
-            </LinkContainer>
-            <LinkContainer to="/portfolio">
-              <Nav.Link>Portfolio</Nav.Link>
-            </LinkContainer>
-            <LinkContainer to="/prints">
-              <Nav.Link>Prints</Nav.Link>
-            </LinkContainer>
-            <LinkContainer to="/equipment">
-              <Nav.Link>Equipment</Nav.Link>
-            </LinkContainer>
-            <LinkContainer to="/contact">
-              <Nav.Link>Contact</Nav.Link>
-            </LinkContainer>
+            <Nav.Link as={Link} to="/">
+              Home
+            </Nav.Link>
+            <Nav.Link as={Link} to="/about">
+              About Me
+            </Nav.Link>
+            <Nav.Link as={Link} to="/portfolio">
+              Portfolio
+            </Nav.Link>
+            <Nav.Link as={Link} to="/prints">
+              Prints
+            </Nav.Link>
+            <Nav.Link as={Link} to="/equipment">
+              Equipment
+            </Nav.Link>
+            <Nav.Link as={Link} to="/contact">
+              Contact
+            </Nav.Link>
           </Nav>
         </Navbar.Collapse>
       </Container>
