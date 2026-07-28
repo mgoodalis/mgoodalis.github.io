@@ -12,9 +12,6 @@ function NavBar() {
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav">
           <Nav className="ms-auto">
-            <Nav.Link as={Link} to="/" className="text-dark">
-              Home
-            </Nav.Link>
             <Nav.Link as={Link} to="/about" className="text-dark">
               About Me
             </Nav.Link>
