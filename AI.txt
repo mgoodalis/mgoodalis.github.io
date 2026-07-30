@@ -1,0 +1,3 @@
+I have been primarily using VS Code's built-in chat tool to help write and build this website.
+
+The source code is approximately 90% AI-generated.
