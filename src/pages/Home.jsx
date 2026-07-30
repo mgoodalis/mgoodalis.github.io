@@ -33,7 +33,7 @@ function Home() {
   return (
     <>
       <section id="center">
-        <Carousel className="photo-carousel" interval={7500} controls indicators>
+        <Carousel className="photo-carousel" interval={5000} ride="carousel" pause={false} controls={false} indicators>
           {slides.map((slide) => (
             <Carousel.Item key={slide.id}>
               <img className="d-block w-100 carousel-slide-image" src={slide.image} alt={slide.title} />
