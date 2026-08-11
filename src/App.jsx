@@ -1,4 +1,5 @@
-import { Routes, Route } from 'react-router-dom'
+import { Routes, Route, useLocation, useNavigate } from 'react-router-dom'
+import { useEffect } from 'react'
 import NavBar from './components/NavBar'
 import Home from './pages/Home'
 import AboutMe from './pages/AboutMe'
@@ -9,6 +10,18 @@ import Contact from './pages/Contact'
 import Checkout from './pages/Checkout'
 
 function App() {
+  const location = useLocation()
+  const navigate = useNavigate()
+
+  useEffect(() => {
+    const params = new URLSearchParams(location.search)
+    const redirect = params.get('redirect')
+    if (redirect) {
+      const path = redirect.startsWith('/') ? redirect : '/' + redirect
+      navigate(path, { replace: true })
+    }
+  }, [location.search, navigate])
+
   return (
     <>
       <NavBar />
