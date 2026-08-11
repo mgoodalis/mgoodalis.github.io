@@ -6,6 +6,7 @@ import Portfolio from './pages/Portfolio'
 import Prints from './pages/Prints'
 import Equipment from './pages/Equipment'
 import Contact from './pages/Contact'
+import Checkout from './pages/Checkout'
 
 function App() {
   return (
@@ -16,6 +17,7 @@ function App() {
         <Route path="/about" element={<AboutMe />} />
         <Route path="/portfolio" element={<Portfolio />} />
         <Route path="/prints" element={<Prints />} />
+        <Route path="/checkout" element={<Checkout />} />
         <Route path="/equipment" element={<Equipment />} />
         <Route path="/contact" element={<Contact />} />
       </Routes>

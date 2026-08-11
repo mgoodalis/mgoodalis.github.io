@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
-import { Container, Row, Col, Card, Form, Button } from 'react-bootstrap';
-import Matt from '../assets/Contact/AboutMe.JPG';
+import { Container, Row, Col, Card, Form, Button, Alert } from 'react-bootstrap';
+import emailjs from '@emailjs/browser';
+
+import MattImage from '../assets/Contact/AboutMe.JPG';
 
 function Contact() {
   const [formData, setFormData] = useState({
@@ -10,26 +12,69 @@ function Contact() {
     message: '',
   });
 
+  const [status, setStatus] = useState('idle'); // 'idle', 'sending', 'success', 'error'
+
   const handleChange = (event) => {
     const { name, value } = event.target;
     setFormData((prev) => ({
       ...prev,
       [name]: value,
     }));
+
+    if (status !== 'idle') {
+      setStatus('idle');
+    }
   };
 
-  const handleSubmit = (event) => {
+  const handleSendMessage = async (event) => {
     event.preventDefault();
+    setStatus('sending');
 
-    const subject = encodeURIComponent(`New message from ${formData.firstName} ${formData.lastName}`);
-    const body = encodeURIComponent(
-      `First Name: ${formData.firstName}\n` +
-        `Last Name: ${formData.lastName}\n` +
-        `Email: ${formData.email}\n\n` +
-        `Message:\n${formData.message}`
-    );
+    try {
+      await emailjs.send(
+        'service_ylsn0j7', //Service ID
+        'template_xmny2e6', //Template ID
+        {
+          from_name: `${formData.firstName} ${formData.lastName}`,
+          from_email: formData.email,
+          message: formData.message,
+        },
+        'dXfg0lz6CrwfTw8mN' //Public key
+      );
+      setStatus('success');
+      setFormData({ firstName: '', lastName: '', email: '', message: '' });
+    } catch (err) {
+      console.error('Error sending email:', err);
+      setStatus('error');
+    }
+  };
 
-    window.location.href = `mailto:goodalis.m2@gmail.com?subject=${subject}&body=${body}`;
+  const renderStatusAlert = () => {
+    if (status === 'sending') {
+      return (
+        <Alert variant="info" className="mb-4">
+          Sending your message...
+        </Alert>
+      );
+    }
+
+    if (status === 'success') {
+      return (
+        <Alert variant="success" className="mb-4">
+          Your message was sent successfully. Thank you!
+        </Alert>
+      );
+    }
+
+    if (status === 'error') {
+      return (
+        <Alert variant="danger" className="mb-4">
+          Something went wrong while sending your message. Please try again.
+        </Alert>
+      );
+    }
+
+    return null;
   };
 
   return (
@@ -37,22 +82,27 @@ function Contact() {
       <Row className="g-4 align-items-stretch">
         <Col md={6} className="d-flex">
           <img
-            src={Matt}
-            alt="Matt"
-            className="img-fluid w-100 h-100 rounded-4 shadow-sm"
-            style={{ objectFit: 'cover', minHeight: '500px' }}
+            src={MattImage}
+            alt="Matt Goodalis"
+            className="img-fluid rounded"
+            style={{ objectFit: 'cover', aspectRatio: '3 / 4' }}
           />
         </Col>
 
         <Col md={6}>
           <Card className="h-100 shadow-sm border-0 bg-light-subtle">
-            <Card.Body className="d-flex flex-column justify-content-center p-4 p-lg-5">
-              <Card.Title className="text-black mb-2">Contact</Card.Title>
+            <Card.Body className="d-flex flex-column justify-content-center p-4 p-lg-5 text-start">
+              <Card.Title className="text-black mb-3" style={{ fontSize: '2.5rem', fontWeight: 500 }}>
+                Contact Me
+              </Card.Title>
               <Card.Text className="text-muted mb-4">
-                Reach out here once you are ready to connect.
+                If you have a question, or if you're intested in working with me, please provide
+                your information below and I'll get back to you when I can.
               </Card.Text>
 
-              <Form onSubmit={handleSubmit}>
+              {renderStatusAlert()}
+
+              <Form onSubmit={handleSendMessage}>
                 <Row className="g-4">
                   <Col xs={12}>
                     <Form.Group>
@@ -107,14 +157,20 @@ function Contact() {
                         value={formData.message}
                         onChange={handleChange}
                         placeholder="Write your message here..."
+                        maxLength={750}
                         required
                       />
                     </Form.Group>
                   </Col>
 
                   <Col xs={12}>
-                    <Button type="submit" variant="dark" className="px-4 py-2">
-                      Send Message
+                    <Button
+                      type="submit"
+                      variant="dark"
+                      className="px-4 py-2"
+                      disabled={status === 'sending'}
+                    >
+                      {status === 'sending' ? 'Sending...' : 'Send Message'}
                     </Button>
                   </Col>
                 </Row>

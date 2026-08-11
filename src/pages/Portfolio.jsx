@@ -1,62 +1,89 @@
 import React from 'react';
-import { Container, Row, Col, Card } from 'react-bootstrap';
+import { Container, Card } from 'react-bootstrap';
 import Carousel from 'react-bootstrap/Carousel';
+
+const imageImports = import.meta.glob('../assets/Portfolio/*.{JPG,jpg,jpeg}', { eager: true });
 
 const categories = [
   {
-    title: 'Landscapes',
+    title: 'Yosemite Valley',
     slides: [
-      { id: 1, image: 'https://via.placeholder.com/1200x800?text=Landscape+1', caption: 'Landscape sample 1' },
-      { id: 2, image: 'https://via.placeholder.com/1200x800?text=Landscape+2', caption: 'Landscape sample 2' },
-      { id: 3, image: 'https://via.placeholder.com/1200x800?text=Landscape+3', caption: 'Landscape sample 3' },
+      { id: 1, caption: 'Morning Fox', imageKey: 'MorningFox_16x9' },
+      { id: 2, caption: 'Half Dome', imageKey: 'Halfdome' },
+      { id: 3, caption: 'Valley View', imageKey: 'ValleyView' },
+      ,
     ],
   },
   {
-    title: 'Urban',
+    title: 'Japan',
     slides: [
-      { id: 1, image: 'https://via.placeholder.com/1200x800?text=Urban+1', caption: 'Urban sample 1' },
-      { id: 2, image: 'https://via.placeholder.com/1200x800?text=Urban+2', caption: 'Urban sample 2' },
-      { id: 3, image: 'https://via.placeholder.com/1200x800?text=Urban+3', caption: 'Urban sample 3' },
+      { id: 1, caption: 'Tokyo Skyline', imageKey: 'TokyoSkyline_16x10' },
+      { id: 3, caption: 'Tokyo Man', imageKey: 'TokyoMan_16x10' },
+      { id: 4, caption: 'Umbrella Man', imageKey: 'UmbrellaMan_5x7' },
+      { id: 5, caption: 'Gion', imageKey: 'Gion_5x7' },
+      { id: 6, caption: 'Hakone', imageKey: 'Hakone_5x7' },
+      { id: 7, caption: 'Imperial Palace', imageKey: 'ImperialPalace_5x7' },
+      { id: 8, caption: 'Osaka Castle', imageKey: 'OsakaCastle_5x7' },
     ],
   },
   {
-    title: 'Travel',
+    title: 'Ireland',
     slides: [
-      { id: 1, image: 'https://via.placeholder.com/1200x800?text=Travel+1', caption: 'Travel sample 1' },
-      { id: 2, image: 'https://via.placeholder.com/1200x800?text=Travel+2', caption: 'Travel sample 2' },
-      { id: 3, image: 'https://via.placeholder.com/1200x800?text=Travel+3', caption: 'Travel sample 3' },
+      { id: 1, caption: 'Cliffs of Moher', imageKey: 'CliffsofMoher_16x9' },
+      { id: 2, caption: 'Gap of Dunloe', imageKey: 'GapofDunloa_16x9' },
     ],
   },
   {
-    title: 'Portraits',
+    title: 'Wisconsin',
     slides: [
-      { id: 1, image: 'https://via.placeholder.com/1200x800?text=Portrait+1', caption: 'Portrait sample 1' },
-      { id: 2, image: 'https://via.placeholder.com/1200x800?text=Portrait+2', caption: 'Portrait sample 2' },
-      { id: 3, image: 'https://via.placeholder.com/1200x800?text=Portrait+3', caption: 'Portrait sample 3' },
+      { id: 1, caption: 'Madison Capital Building', imageKey: 'MadisonCapital_5x7' },
+      { id: 2, caption: 'Stairs and Pillars', imageKey: 'StairsAndPillars_5x7' },
+      { id: 3, caption: 'Frog', imageKey: 'Frog_16x9' },
+      { id: 4, caption: 'Sundown', imageKey: 'Sundown' },
     ],
   },
-];
+].map((category) => ({
+  ...category,
+  slides: category.slides.map((slide) => {
+    const match = Object.entries(imageImports).find(([path]) => path.includes(slide.imageKey));
+
+    return {
+      ...slide,
+      image: match ? match[1].default : null,
+    };
+  }),
+}));
 
 function Portfolio() {
   return (
     <Container className="py-5">
       <div className="text-center mb-5">
         <h1 className="display-6 fw-semibold text-dark">Portfolio</h1>
-        <p className="text-muted">A framework for your photography collections.</p>
       </div>
 
       <div className="d-flex flex-column gap-4">
         {categories.map((category) => (
-          <Card className="border-0 shadow-sm" key={category.title}>
+          <Card className="h-100 border-0" style={{ backgroundColor: '#ffffff', boxShadow: '0 4px 8px rgba(0, 0, 0, 0.12)' }} key={category.title}>
             <Card.Body>
-              <Card.Title className="mb-3">{category.title}</Card.Title>
-              <Carousel interval={null} indicators={false} className="rounded overflow-hidden">
+              <Card.Title className="mb-4 text-start fs-4 fw-semibold">{category.title}</Card.Title>
+              <Carousel interval={3000} controls={false} className="rounded overflow-hidden">
                 {category.slides.map((slide) => (
                   <Carousel.Item key={slide.id}>
-                    <img src={slide.image} alt={slide.caption} className="d-block w-100" style={{ height: '280px', objectFit: 'cover' }} />
-                    <Carousel.Caption className="bg-dark bg-opacity-50 rounded-pill px-3 py-2">
-                      <p className="mb-0">{slide.caption}</p>
-                    </Carousel.Caption>
+                    {slide.image ? (
+                      <img
+                        src={slide.image}
+                        alt={slide.caption}
+                        className="d-block w-100"
+                        style={{
+                          height: 'auto',
+                          maxHeight: '700px',
+                          objectFit: 'contain',
+                          background: '#ffffff',
+                          display: 'block',
+                          margin: '0 auto',
+                        }}
+                      />
+                    ) : null}
                   </Carousel.Item>
                 ))}
               </Carousel>
