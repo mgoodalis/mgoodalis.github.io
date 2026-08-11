@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Container, Row, Col, Card, Form, Button } from 'react-bootstrap';
-import Matt from '../assets/Matt.JPG';
+import Matt from '../assets/Contact/AboutMe.JPG';
 
 function Contact() {
   const [formData, setFormData] = useState({

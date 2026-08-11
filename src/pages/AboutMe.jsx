@@ -1,6 +1,6 @@
 import React from 'react';
 import { Container, Row, Col, Card } from 'react-bootstrap';
-import MattImage from '../assets/Matt.jpg';
+import MattImage from '../assets/AboutMe/AboutMe.jpg';
 
 function AboutMe() {
   return (
