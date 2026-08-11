@@ -60,19 +60,19 @@ const printItems = [
   },
   {
     id: 5,
-    title: 'Cliffs of Moher',
+    title: 'The Cliffs of Moher',
     price: '$75',
     imageKey: 'CliffsofMoher_Thumbnail',
   },
   {
     id: 6,
-    title: 'Lords of the Frogs',
+    title: 'Lord of the Frogs',
     price: '$45',
     imageKey: 'Frog_Thumbnail',
   },
   {
     id: 7,
-    title: 'Gap of Dunloe',
+    title: 'The Gap of Dunloe',
     price: '$60',
     imageKey: 'GapofDunloe_Thumbnail',
   },
