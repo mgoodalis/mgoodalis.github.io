@@ -72,7 +72,21 @@ function Checkout() {
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    alert('This is a fake storefront. No payment was processed.');
+    alert('Thank you for your order! This is a fake checkout page, and no payment will be processed.');
+
+    // Clear delivery and payment fields after submission
+    setFormData({
+      firstName: '',
+      lastName: '',
+      address: '',
+      city: '',
+      state: '',
+      zip: '',
+      cardName: '',
+      cardNumber: '',
+      expiry: '',
+      cvv: '',
+    });
   };
 
   return (
@@ -271,8 +285,14 @@ function Checkout() {
                         type="text"
                         name="cardNumber"
                         value={formData.cardNumber}
-                        onChange={handleChange}
-                        placeholder="1234 5678 9012 3456"
+                        onChange={(e) => {
+                          const digits = e.target.value.replace(/\D/g, '').slice(0, 16);
+                          setFormData((prev) => ({ ...prev, cardNumber: digits }));
+                        }}
+                        placeholder="1234567890123456"
+                        inputMode="numeric"
+                        pattern="[0-9]*"
+                        maxLength={16}
                         required
                       />
                     </Form.Group>
@@ -304,8 +324,13 @@ function Checkout() {
                         type="text"
                         name="cvv"
                         value={formData.cvv}
-                        onChange={handleChange}
-                        placeholder="123"
+                        onChange={(e) => {
+                          const digits = e.target.value.replace(/\D/g, '').slice(0, 4);
+                          setFormData((prev) => ({ ...prev, cvv: digits }));
+                        }}
+                        placeholder="1234"
+                        inputMode="numeric"
+                        pattern="[0-9]*"
                         maxLength={4}
                         required
                       />
